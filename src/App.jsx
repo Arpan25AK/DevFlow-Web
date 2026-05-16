@@ -1,12 +1,14 @@
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from './pages/Home/index.jsx'
 
 function App() {
-  return (
-      <div className="min-h-screen bg-[#0d1117]">
-        <h1 style={{color: "navajowhite"}}>DevFlow</h1>
-      </div>
-  )
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+            </Routes>
+        </BrowserRouter>
+    )
 }
-
 
 export default App
