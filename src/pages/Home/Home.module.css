@@ -4,7 +4,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1;
+    z-index: 0;
     pointer-events: none;
 }
 
@@ -13,17 +13,30 @@
     z-index: 1;
     min-height: 100vh;
     width: 100%;
+    pointer-events: all;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.logogrp{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: 10vw;
+}
+
+.logoimg{
+    width: 2vw;
+    height: 2vw;
 }
 
 .logo {
     color: #ffffff;
     font-family: 'Roboto Mono', monospace;
-    padding: 0.5vw;
-    font-size: 3vw;
-    margin-left: 0;
+    font-size: 2vw;
+    margin: 0;
     display: flex;
     justify-content: space-between;
-
 }
 
 .navbar{
@@ -38,8 +51,8 @@
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-top: -50px;
     padding: 1.5vw 3vw;
+    margin-right: 8vw;
 }
 
 .loginbtn{
@@ -49,12 +62,13 @@
     font-size: 1.5vw;
     color: ghostwhite;
     padding: 10px;
+    border-radius: 10px;
 
 }
 
 .loginbtn:hover {
-    background: #00d4d4;
-    color: #111113;
+    background: grey;
+    color: navajowhite;
 }
 
 .mainPunch{
@@ -63,3 +77,88 @@
     font-size: 3.7vw;
     margin-left: 10vw;
 }
+
+
+/* ─────────────────────────────────────────
+   FEATURE CARDS
+───────────────────────────────────────── */
+.featureGrid {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px 5%;
+    max-width: 100%;
+    margin: 0 auto;
+    margin-top: 15vw;
+}
+
+.card {
+    width: 40%;
+    height: 200px;
+    padding: 0.5rem;
+    background: rgba(198, 198, 198, 0.34);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.440);
+    border-left: 2px rgba(255, 255, 255, 0.545) outset;
+    box-shadow: -40px 50px 30px rgba(0, 0, 0, 0.280);
+    transform: skewX(10deg);
+    transition: .4s;
+    overflow: hidden;
+    color: white;
+    cursor: pointer;
+}
+
+.card:hover {
+    height: 360px;
+    transform: skew(0deg);
+}
+
+.align {
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.red   { width: 10px; height: 10px; border-radius: 50%; background-color: #ff605c; box-shadow: -5px 5px 5px rgba(0,0,0,0.280); }
+.yellow{ width: 10px; height: 10px; border-radius: 50%; background-color: #ffbd44; box-shadow: -5px 5px 5px rgba(0,0,0,0.280); }
+.green { width: 10px; height: 10px; border-radius: 50%; background-color: #00ca4e; box-shadow: -5px 5px 5px rgba(0,0,0,0.280); }
+
+.card h2 {
+    text-align: center;
+    margin: 1.3rem;
+    font-size: 2.5rem;
+    color: rgb(218, 244, 237);
+    text-shadow: -10px 5px 10px rgba(0,0,0,0.573);
+}
+
+.card p {
+    font-size: 1.2rem;
+    padding: 0 1rem;
+    opacity: 0;
+    transition: .4s;
+}
+
+.card:hover p {
+    opacity: 1;
+}
+
+.social-contacts{
+    margin-top: -30px;
+    color: white;
+    font-family: 'Fira Code', monospace;
+    font-size: 2vw;
+    text-decoration: none;
+    padding-bottom: 10px;
+    margin-left: 2px;
+}
+
+.punchHeader{
+    color: #ffffff ;
+    margin-top: 15vw;
+    font-size: 3.9vw;
+    margin-left: 10vw;
+}
+
