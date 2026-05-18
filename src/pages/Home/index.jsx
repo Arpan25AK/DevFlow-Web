@@ -106,9 +106,18 @@ function Home() {
 
                     <div>
                         <p className={styles.punchHeader}>How it works — 3 steps</p>
-                        <p className={styles.mainPunch}>01 — Create a Repository
+                        <p className={styles.headerContent}>01 — Create a Repository
                             Push your code and invite your team.</p>
+                        <p className={styles.headerContent}>02 — Set Up Your Pipeline
+                            Define your build, test and deploy steps.</p>
+                        <p className={styles.headerContent}>03 — Review & Ship
+                            Review code, merge with confidence, deploy automatically.</p>
                     </div>
+
+                    <h2 className={styles.mainPunch} style={{marginTop: '10vw'}}>Ready to build something great?
+
+                        Start for free — no credit card required.
+                    </h2>
                 </div>
 
 
