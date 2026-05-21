@@ -1,31 +1,42 @@
+.pageWrapper {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+}
+
 .vantaBg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
 }
 
 .content {
     position: relative;
     z-index: 1;
-    min-height: 100vh;
     width: 100%;
     pointer-events: all;
-    overflow-y: auto;
-    height: 100vh;
 }
 
-.logogrp{
+/* ── Navbar ── */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logogrp {
     display: flex;
     gap: 10px;
     align-items: center;
     margin-left: 10vw;
 }
 
-.logoimg{
+.logoimg {
     width: 2vw;
     height: 2vw;
 }
@@ -35,19 +46,9 @@
     font-family: 'Roboto Mono', monospace;
     font-size: 2vw;
     margin: 0;
-    display: flex;
-    justify-content: space-between;
 }
 
-.navbar{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-
-}
-
-.nav{
+.nav {
     display: flex;
     gap: 10px;
     align-items: center;
@@ -55,7 +56,7 @@
     margin-right: 8vw;
 }
 
-.loginbtn{
+.loginbtn {
     cursor: pointer;
     border: none;
     background-color: transparent;
@@ -63,7 +64,6 @@
     color: ghostwhite;
     padding: 10px;
     border-radius: 10px;
-
 }
 
 .loginbtn:hover {
@@ -71,17 +71,14 @@
     color: navajowhite;
 }
 
-.mainPunch{
-    color: #ffffff ;
-
+/* ── Hero ── */
+.mainPunch {
+    color: #ffffff;
     font-size: 3.7vw;
     margin-left: 10vw;
 }
 
-
-/* ─────────────────────────────────────────
-   FEATURE CARDS
-───────────────────────────────────────── */
+/* ── Feature Cards ── */
 .featureGrid {
     display: flex;
     gap: 20px;
@@ -100,9 +97,9 @@
     background: rgba(198, 198, 198, 0.34);
     border-radius: 8px;
     backdrop-filter: blur(5px);
-    border-bottom: 3px solid rgba(255, 255, 255, 0.440);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.44);
     border-left: 2px rgba(255, 255, 255, 0.545) outset;
-    box-shadow: -40px 50px 30px rgba(0, 0, 0, 0.280);
+    box-shadow: -40px 50px 30px rgba(0, 0, 0, 0.28);
     transform: skewX(10deg);
     transition: .4s;
     overflow: hidden;
@@ -122,9 +119,9 @@
     gap: 5px;
 }
 
-.red   { width: 10px; height: 10px; border-radius: 50%; background-color: #ff605c; box-shadow: -5px 5px 5px rgba(0,0,0,0.280); }
-.yellow{ width: 10px; height: 10px; border-radius: 50%; background-color: #ffbd44; box-shadow: -5px 5px 5px rgba(0,0,0,0.280); }
-.green { width: 10px; height: 10px; border-radius: 50%; background-color: #00ca4e; box-shadow: -5px 5px 5px rgba(0,0,0,0.280); }
+.red    { width: 10px; height: 10px; border-radius: 50%; background-color: #ff605c; box-shadow: -5px 5px 5px rgba(0,0,0,0.28); }
+.yellow { width: 10px; height: 10px; border-radius: 50%; background-color: #ffbd44; box-shadow: -5px 5px 5px rgba(0,0,0,0.28); }
+.green  { width: 10px; height: 10px; border-radius: 50%; background-color: #00ca4e; box-shadow: -5px 5px 5px rgba(0,0,0,0.28); }
 
 .card h2 {
     text-align: center;
@@ -145,26 +142,120 @@
     opacity: 1;
 }
 
-.social-contacts{
-    margin-top: -30px;
-    color: white;
-    font-family: 'Fira Code', monospace;
-    font-size: 2vw;
-    text-decoration: none;
-    padding-bottom: 10px;
-    margin-left: 2px;
+/* ── How it works ── */
+.stepsSection {
+    margin-top: 10vw;
+    padding: 0 10vw;
 }
 
-.punchHeader{
-    color: #ffffff ;
-    margin-top: 15vw;
+.punchHeader {
+    color: #ffffff;
     font-size: 3.9vw;
-    margin-left: 10vw;
+    margin-bottom: 3vw;
 }
 
-.headerContent{
-    color: darkgrey;
+.stepsGrid {
+    display: flex;
+    gap: 40px;
+    justify-content: space-between;
+}
+
+.step {
+    flex: 1;
+    background: rgba(198, 198, 198, 0.1);
+    border-radius: 10px;
+    padding: 2rem;
+    border-top: 2px solid #00d4d4;
+}
+
+.stepNumber {
     font-size: 3vw;
-    margin-left: 12vw;
+    color: #00d4d4;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: bold;
 }
 
+.step h3 {
+    color: #ffffff;
+    font-size: 1.3vw;
+    margin: 10px 0 6px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.step p {
+    color: #a0a0a0;
+    font-size: 1vw;
+    margin: 0;
+}
+
+/* ── CTA ── */
+.ctaSection {
+    margin-top: 10vw;
+    text-align: center;
+    padding: 4vw 0;
+}
+
+.ctaTitle {
+    color: #ffffff;
+    font-size: 3vw;
+    font-family: 'Roboto Mono', monospace;
+    margin-bottom: 1vw;
+}
+
+.ctaSubtitle {
+    color: #a0a0a0;
+    font-size: 1.3vw;
+    margin-bottom: 2vw;
+}
+
+.ctaBtn {
+    background: #00d4d4;
+    color: #111113;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 36px;
+    font-size: 1.2vw;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.ctaBtn:hover {
+    background: #00b4b4;
+}
+
+/* ── Footer ── */
+.footer {
+    margin-top: 6vw;
+    padding: 2vw 10vw;
+    border-top: 1px solid #2a2a32;
+    color: #666666;
+    font-size: 0.9vw;
+    font-family: 'Roboto Mono', monospace;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .logoimg   { width: 5vw; height: 5vw; }
+    .logo      { font-size: 5vw; }
+    .loginbtn  { font-size: 3.5vw; }
+    .mainPunch { font-size: 7vw; }
+    .card      { width: 80%; }
+    .stepsGrid { flex-direction: column; }
+    .step h3   { font-size: 4vw; }
+    .step p    { font-size: 3vw; }
+    .ctaTitle  { font-size: 6vw; }
+    .ctaSubtitle { font-size: 3.5vw; }
+    .ctaBtn    { font-size: 4vw; }
+    .footer    { flex-direction: column; gap: 10px; font-size: 3vw; }
+}
+
+@media (max-width: 480px) {
+    .logo      { font-size: 6vw; }
+    .loginbtn  { font-size: 4.5vw; }
+    .mainPunch { font-size: 9vw; }
+    .card      { width: 90%; }
+}
