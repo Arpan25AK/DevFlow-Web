@@ -20,7 +20,7 @@ function Login() {
             })
             const token = await response.text()
             if (!response.ok) {
-                SetError(token || 'Invalid credentials')  // ← token holds the error message when !ok
+                SetError(token || 'Invalid credentials')
             } else {
                 localStorage.setItem('token', token)
                 navigate('/dashboard')
