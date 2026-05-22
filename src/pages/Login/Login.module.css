@@ -61,17 +61,20 @@
     display: flex;
     gap: 10px;
     align-items: center;
+    margin-left: 8vw;
+    font-weight: bold;
+    padding: 10px;
 }
 
 .logoimg {
-    width: 30px;
-    height: 30px;
+    width: 2vw;
+    height: 2vw;
 }
 
 .logoText {
     color: #ffffff;
     font-family: 'Roboto Mono', monospace;
-    font-size: 1.3rem;
+    font-size: 2vw;
     font-weight: bold;
     background: transparent;
     border: none;

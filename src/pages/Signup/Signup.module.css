@@ -55,18 +55,19 @@
     display: flex;
     gap: 10px;
     align-items: center;
-    padding: 20px 40px;
+    padding: 10px;
+    margin-left: 8vw;
 }
 
 .logoimg {
-    width: 30px;
-    height: 30px;
+    width: 2vw;
+    height: 2vw;
 }
 
 .logo {
     color: #ffffff;
     font-family: 'Roboto Mono', monospace;
-    font-size: 1.3rem;
+    font-size: 2vw;
     background: transparent;
     border: none;
     cursor: pointer;
