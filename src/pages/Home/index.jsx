@@ -1,45 +1,24 @@
-import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './Home.module.css'
 import logo from '../../assets/git.jpg'
 
 function Home() {
     const navigate = useNavigate()
-    const vantaRef = useRef(null)
-    const vantaEffect = useRef(null)
-
-    useEffect(() => {
-        import('three').then((THREE) => {
-            window.THREE = THREE
-            import('vanta/dist/vanta.net.min').then(() => {
-                vantaEffect.current = window.VANTA.NET({
-                    el: vantaRef.current,
-                    mouseControls: true,
-                    touchControls: true,
-                    gyroControls: false,
-                    minHeight: 200,
-                    minWidth: 200,
-                    scale: 1.0,
-                    scaleMobile: 1.0,
-                    backgroundColor: 0x111113,
-                    color: 0xff3f81,
-                    points: 10,
-                    maxDistance: 20,
-                    spacing: 15,
-                })
-            }).catch(err => console.error('Vanta error:', err))
-        }).catch(err => console.error('THREE error:', err))
-
-        return () => {
-            if (vantaEffect.current) vantaEffect.current.destroy()
-        }
-    }, [])
 
     return (
         <div className={styles.pageWrapper}>
 
-            {/* Vanta background */}
-            <div ref={vantaRef} className={styles.vantaBg}></div>
+            {/* Pattern background */}
+            <div className={styles.patternBg}>
+                <svg className={styles.cubeSvg} xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="cubes" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+                            <polygon points="40,5 75,25 75,55 40,75 5,55 5,25" fill="none" stroke="#00d4d433" strokeWidth="1"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#cubes)"/>
+                </svg>
+            </div>
 
             {/* Page content */}
             <div className={styles.content}>
@@ -130,10 +109,7 @@ function Home() {
                 <div className={styles.ctaSection}>
                     <h2 className={styles.ctaTitle}>Ready to build something great?</h2>
                     <p className={styles.ctaSubtitle}>Start for free — no credit card required.</p>
-                    <button
-                        className={styles.ctaBtn}
-                        onClick={() => navigate('/signup')}
-                    >
+                    <button className={styles.ctaBtn} onClick={() => navigate('/signup')}>
                         Create Your Account
                     </button>
                 </div>
