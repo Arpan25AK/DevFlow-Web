@@ -109,7 +109,7 @@ function Home() {
                 <div className={styles.ctaSection}>
                     <h2 className={styles.ctaTitle}>Ready to build something great?</h2>
                     <p className={styles.ctaSubtitle}>Start for free — no credit card required.</p>
-                    <button className={styles.ctaBtn} onClick={() => navigate('/signup')}>
+                    <button className={styles.ctaBtn} onClick={() => navigate('/Dashboard')}>
                         Create Your Account
                     </button>
                 </div>
