@@ -2,10 +2,26 @@ import { useNavigate } from 'react-router-dom'
 import styles from './Dashboard.module.css'
 import logo from "../../assets/git.jpg";
 import signupStyles from "../Signup/Signup.module.css";
+import {useState} from "react";
 
 
 function Dashboard() {
     const navigate = useNavigate()
+    const [openSection, setOpenSection] = useState(null)
+    const [activeView, setActiveView] = useState('list-repos')
+
+    const toggle = (section) => {
+        setOpenSection( openSection === section ? null : section)
+    }
+
+    const renderView = () =>{
+        switch (activeView){
+            case 'create-repo' : return <CreateRepo />
+            case 'list-repo' : return <ListRepo />
+            default : return <ListRepo />
+        }
+    }
+
     return(
         <div className={styles.bg}>
             <div className={styles.patternBg}>
@@ -19,23 +35,6 @@ function Dashboard() {
                 </svg>
             </div>
 
-            <div className={signupStyles.pageContent}>
-
-                <div className={signupStyles.logogrp}>
-                    <img className={signupStyles.logoimg} src={logo} alt="logo" />
-                    <button className={signupStyles.logo} onClick={() => navigate('/')}>DevFlow</button>
-                </div>
-
-                <div className={styles.glassBox}>
-                    <ul className={styles.glassBoxContents}>
-                        <p>Create ur repository</p>
-                        <p>List out ur repository</p>
-                        <p>Upload files to ur repository</p>
-                        <p>Get files in ur repository</p>
-                    </ul>
-                </div>
-
-            </div>
 
         </div>
     )
