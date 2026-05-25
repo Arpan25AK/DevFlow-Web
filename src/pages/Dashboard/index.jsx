@@ -10,6 +10,7 @@ function Dashboard() {
     const navigate = useNavigate()
     const [openSection, setOpenSection] = useState(null)
     const [activeView, setActiveView] = useState('list-repo')
+    const [sidebarOpen, setSidebarOpen] = useState(false)
 
     const toggle = (section) => {
         setOpenSection(openSection === section ? null : section)
@@ -26,7 +27,6 @@ function Dashboard() {
     return (
         <div className={styles.bg}>
 
-            {/* Background */}
             <div className={styles.patternBg}>
                 <svg className={styles.cubeSvg} xmlns="http://www.w3.org/2000/svg">
                     <defs>
@@ -38,24 +38,31 @@ function Dashboard() {
                 </svg>
             </div>
 
-            {/* Page content */}
             <div className={styles.pageContent}>
 
-                {/* Navbar */}
                 <div className={styles.navbar}>
+                    {/* Hamburger — only shows on mobile */}
+                    <button
+                        className={styles.hamburger}
+                        onClick={() => setSidebarOpen(true)}
+                    >
+                        ☰
+                    </button>
+
                     <div className={styles.logogrp}>
                         <img className={styles.logoimg} src={logo} alt="logo" />
                         <button className={styles.logo} onClick={() => navigate('/')}>DevFlow</button>
                     </div>
                 </div>
 
-                {/* Body */}
                 <div className={styles.body}>
                     <Sidebar
                         openSection={openSection}
                         toggle={toggle}
                         setActiveView={setActiveView}
                         activeView={activeView}
+                        isOpen={sidebarOpen}
+                        onClose={() => setSidebarOpen(false)}
                     />
                     <div className={styles.mainContent}>
                         {renderView()}

@@ -1,4 +1,4 @@
-function ListRepo() {
-    return <h2 style={{color: '#fff'}}>My Repositories</h2>
+function ListFiles() {
+    return <h2 style={{color: '#fff'}}>List Files</h2>
 }
-export default ListRepo
+export default ListFiles
