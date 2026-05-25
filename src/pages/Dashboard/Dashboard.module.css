@@ -98,5 +98,43 @@
     text-align: left;
     margin-left: -2vw;
     line-height: 1.6;
+}
 
+/* ── Navbar ── */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    z-index: 2;
+}
+
+.logogrp {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: 10vw;
+}
+
+.logoimg {
+    width: 2vw;
+    height: 2vw;
+}
+
+.logo {
+    color: #ffffff;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 2vw;
+    margin: 0;
+}
+
+.body {
+    display: flex;
+    flex: 1;
+}
+
+.mainContent {
+    flex: 1;
+    padding: 32px;
+    overflow-y: auto;
 }
