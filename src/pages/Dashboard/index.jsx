@@ -1,31 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import styles from './Dashboard.module.css'
-import logo from "../../assets/git.jpg"
-import { useState } from "react"
-import Sidebar from './Component/Sidebar'
-import CreateRepo from './Views/CreateRepo'
-import ListRepo from './Views/ListRepo'
+import logo from '../../assets/git.jpg'
 
 function Dashboard() {
     const navigate = useNavigate()
-    const [openSection, setOpenSection] = useState(null)
-    const [activeView, setActiveView] = useState('list-repo')
-    const [sidebarOpen, setSidebarOpen] = useState(false)
+    return(
+        <div>
 
-    const toggle = (section) => {
-        setOpenSection(openSection === section ? null : section)
-    }
-
-    const renderView = () => {
-        switch (activeView) {
-            case 'create-repo': return <CreateRepo />
-            case 'list-repo':   return <ListRepo />
-            default:            return <ListRepo />
-        }
-    }
-
-    return (
-        <div className={styles.bg}>
 
             <div className={styles.patternBg}>
                 <svg className={styles.cubeSvg} xmlns="http://www.w3.org/2000/svg">
@@ -38,39 +19,16 @@ function Dashboard() {
                 </svg>
             </div>
 
-            <div className={styles.pageContent}>
-
-                <div className={styles.navbar}>
-                    {/* Hamburger — only shows on mobile */}
-                    <button
-                        className={styles.hamburger}
-                        onClick={() => setSidebarOpen(true)}
-                    >
-                        ☰
-                    </button>
-
-                    <div className={styles.logogrp}>
-                        <img className={styles.logoimg} src={logo} alt="logo" />
-                        <button className={styles.logo} onClick={() => navigate('/')}>DevFlow</button>
-                    </div>
+            <div className={styles.navbar}>
+                <div className={styles.logogrp}>
+                <img  className={styles.logoimg} src={logo} alt="logo" />
+                <button className={styles.logoText} onClick={() => navigate('/')}>DevFlow</button>
                 </div>
-
-                <div className={styles.body}>
-                    <Sidebar
-                        openSection={openSection}
-                        toggle={toggle}
-                        setActiveView={setActiveView}
-                        activeView={activeView}
-                        isOpen={sidebarOpen}
-                        onClose={() => setSidebarOpen(false)}
-                    />
-                    <div className={styles.mainContent}>
-                        {renderView()}
-                    </div>
-                </div>
-
             </div>
+
         </div>
+
+
     )
 }
 
