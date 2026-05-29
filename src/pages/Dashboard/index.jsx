@@ -26,6 +26,8 @@ function Dashboard() {
                 </div>
             </div>
 
+            <p className={styles.header}>DashBoard</p>
+
         </div>
 
 
