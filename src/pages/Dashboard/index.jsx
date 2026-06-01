@@ -52,7 +52,7 @@ function Dashboard() {
 
                 <span className={styles.block_main}>CI/CD</span>
                     <div className={styles.btn_block}>
-
+                        <button className={styles.block_side} >History</button>
                     </div>
 
             </div>

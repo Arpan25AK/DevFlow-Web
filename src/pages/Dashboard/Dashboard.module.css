@@ -82,7 +82,7 @@
 }
 
 .glassBox {
-    width: 420px;
+    width: 250px;
     padding: 10px;
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(12px);
@@ -120,5 +120,5 @@
     color: #a0a0a0;
     text-align: left;
     cursor: pointer;
-    width: calc(33.33% - 8px);
+    width: calc(44.33% - 8px);
 }
