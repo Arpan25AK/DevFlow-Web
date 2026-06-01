@@ -30,10 +30,31 @@ function Dashboard() {
 
             <div className={styles.glassBox}>
                 <span className={styles.block_main}>Repository</span>
-                <button className={styles.block_side}>Create Repo</button>
-                <button className={styles.block_side}>Upload File</button>
+                <div className={styles.btn_block}>
+                    <button className={styles.block_side} onClick={() => navigate('/')}>Create Repo</button>
+                    <button className={styles.block_side} onClick={() => navigate('/signup')}>Get All Repos</button>
+                    <button className={styles.block_side}>Repo Exists By name&email</button>
+                    <button className={styles.block_side}>Upload File</button>
+                    <button className={styles.block_side}>Download File</button>
+                    <button className={styles.block_side}>File List in Repo</button>
+                    <button className={styles.block_side} >Delete Repo</button>
+                </div>
 
-                <span className={styles.block_main}>dkjfsd</span>
+                <span className={styles.block_main}>Chat</span>
+                <div className={styles.btn_block}>
+                    <button className={styles.block_side} >Join Convo</button>
+                </div>
+
+                <span className={styles.block_main}>Code Review</span>
+                <div className={styles.btn_block}>
+                    <button className={styles.block_side} >Check Reviews</button>
+                </div>
+
+                <span className={styles.block_main}>CI/CD</span>
+                    <div className={styles.btn_block}>
+
+                    </div>
+
             </div>
 
         </div>
