@@ -28,6 +28,14 @@ function Dashboard() {
 
             <p className={styles.header}>DashBoard</p>
 
+            <div className={styles.glassBox}>
+                <span className={styles.block_main}>Repository</span>
+                <button className={styles.block_side}>Create Repo</button>
+                <button className={styles.block_side}>Upload File</button>
+
+                <span className={styles.block_main}>dkjfsd</span>
+            </div>
+
         </div>
 
 
