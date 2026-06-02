@@ -36,6 +36,8 @@ function Dashboard() {
 
             <p className={styles.header}>DashBoard</p>
 
+        <div className={styles.rowbox}>
+
             <div className={styles.glassBox}>
                 <span className={styles.block_main}>Repository</span>
                 <div className={styles.btn_block}>
@@ -62,8 +64,15 @@ function Dashboard() {
                     <div className={styles.btn_block}>
                         <button className={styles.block_side} >History</button>
                     </div>
+            </div>
+
+            <div className={styles.mainbox}>
 
             </div>
+
+        </div>
+
+
 
         </div>
 
