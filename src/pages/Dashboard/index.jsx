@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { IoNotificationsOutline } from 'react-icons/io5'
+import { IoPersonCircleOutline } from 'react-icons/io5'
 import styles from './Dashboard.module.css'
 import logo from '../../assets/git.jpg'
-
+import propic from '../../assets/propic.jpeg'
 function Dashboard() {
     const navigate = useNavigate()
 
@@ -24,8 +25,13 @@ function Dashboard() {
                 <div className={styles.logogrp}>
                 <img  className={styles.logoimg} src={logo} alt="logo" />
                 <button className={styles.logoText} onClick={() => navigate('/')}>DevFlow</button>
-                    <button className={styles.noti_btn}><IoNotificationsOutline size={22} /></button>
                 </div>
+                <button className={styles.noti_btn}><IoNotificationsOutline size={22} /></button>
+                <button className={styles.propic_btn}>
+                    {propic
+                        ? <img src={propic} alt="profile" style={{width: 28, height: 28, borderRadius: '50%'}} />
+                        : <IoPersonCircleOutline size={28} />}
+                </button>
             </div>
 
             <p className={styles.header}>DashBoard</p>
