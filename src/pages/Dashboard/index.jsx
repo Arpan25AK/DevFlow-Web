@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom'
+import { IoNotificationsOutline } from 'react-icons/io5'
 import styles from './Dashboard.module.css'
 import logo from '../../assets/git.jpg'
 
 function Dashboard() {
     const navigate = useNavigate()
+
     return(
         <div>
-
 
             <div className={styles.patternBg}>
                 <svg className={styles.cubeSvg} xmlns="http://www.w3.org/2000/svg">
@@ -23,6 +24,7 @@ function Dashboard() {
                 <div className={styles.logogrp}>
                 <img  className={styles.logoimg} src={logo} alt="logo" />
                 <button className={styles.logoText} onClick={() => navigate('/')}>DevFlow</button>
+                    <button className={styles.noti_btn}><IoNotificationsOutline size={22} /></button>
                 </div>
             </div>
 
