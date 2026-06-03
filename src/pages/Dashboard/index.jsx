@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { IoNotificationsOutline } from 'react-icons/io5'
+import {IoNotificationsOutline, IoPinOutline, IoPinSharp} from 'react-icons/io5'
 import { IoPersonCircleOutline } from 'react-icons/io5'
 import styles from './Dashboard.module.css'
 import logo from '../../assets/git.jpg'
@@ -16,11 +16,11 @@ function Dashboard() {
     })
 
     const togglePin = (repo) =>{
-        const alreadyPinned = pinned.find( r => r.id ==== repo.id)
-        const updated
+        const alreadyPinned = pinned.find( r => r.id === repo.id)
+        let updated
 
         if(alreadyPinned){
-            updated = pinned.filter(r => r.id != repo.id)
+            updated = pinned.filter(r => r.id !== repo.id)
         }else{
             updated = [...pinned, repo]
         }
@@ -32,7 +32,7 @@ function Dashboard() {
     const sortedRepos = [...repos].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
 
     const unpinnedRepos = sortedRepos.filter(repo =>
-     !pinned(p => p.id ==== repo.id)
+     !pinned.find(p => p.id === repo.id)
     )
 
     return(
@@ -95,12 +95,39 @@ function Dashboard() {
             </div>
 
             <div className={styles.mainbox}>
-                <span className={styles.block_main}>Repositories</span>
+                {pinned.length > 0 && (
+                    <div>
+                        <span className={styles.block_main}>Pinned</span>
+                        <div className={styles.repoGrid}>
+                            {pinned.map(repo => (
+                                <div key={repo.id} className={styles.repoCard}>
+                                    <span>{repo.name}</span>
+                                    <button onClick={() => togglePin(repo)}>
+                                        <IoPinSharp size={16} color="#00d4d4" />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+
+                    </div>
+                )}
+
+                <div className={styles.repoGrid}>
+                    {unpinnedRepos.map(repo => (
+                        <div key={repo.id} className={styles.repoCard}>
+                            {repo.name}
+                            <button onClick={() => togglePin(repo)}>
+                                <IoPinOutline size={16} />
+                            </button>
+                        </div>
+                        ))}
+                </div>
             </div>
 
+
+
+
         </div>
-
-
 
         </div>
 
