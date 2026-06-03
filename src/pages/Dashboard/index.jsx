@@ -122,6 +122,7 @@ function Dashboard() {
                         </div>
                         ))}
                 </div>
+                <span className={styles.block_main}>PipeLine History</span>
             </div>
 
 
