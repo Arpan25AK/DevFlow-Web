@@ -4,8 +4,36 @@ import { IoPersonCircleOutline } from 'react-icons/io5'
 import styles from './Dashboard.module.css'
 import logo from '../../assets/git.jpg'
 import propic from '../../assets/propic.jpeg'
+import {useState} from "react";
 function Dashboard() {
     const navigate = useNavigate()
+
+    const[repos, setRepos] = useState([])
+
+    const[pinned , setPinned] = useState(() => {
+        const saved = localStorage.getItem("pinned")
+        return saved ? JSON.parse(saved) : []
+    })
+
+    const togglePin = (repo) =>{
+        const alreadyPinned = pinned.find( r => r.id ==== repo.id)
+        const updated
+
+        if(alreadyPinned){
+            updated = pinned.filter(r => r.id != repo.id)
+        }else{
+            updated = [...pinned, repo]
+        }
+
+        setPinned(updated)
+        localStorage.setItem('pinned', JSON.stringify(updated))
+    }
+
+    const sortedRepos = [...repos].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
+
+    const unpinnedRepos = sortedRepos.filter(repo =>
+     !pinned(p => p.id ==== repo.id)
+    )
 
     return(
         <div>
@@ -67,7 +95,7 @@ function Dashboard() {
             </div>
 
             <div className={styles.mainbox}>
-
+                <span className={styles.block_main}>Repositories</span>
             </div>
 
         </div>
