@@ -9,6 +9,7 @@ function Dashboard() {
     const navigate = useNavigate()
 
     const[repos, setRepos] = useState([])
+    const[showModel, setShowModel] = useState(false)
 
     const[pinned , setPinned] = useState(() => {
         const saved = localStorage.getItem("pinned")
@@ -69,7 +70,7 @@ function Dashboard() {
             <div className={styles.glassBox}>
                 <span className={styles.block_main}>Repository</span>
                 <div className={styles.btn_block}>
-                    <button className={styles.block_side} onClick={() => navigate('/')}>Create Repo</button>
+                    <button className={styles.block_side} onClick={() => setShowModel(true)}>Create Repo</button>
                     <button className={styles.block_side} onClick={() => navigate('/signup')}>Get All Repos</button>
                     <button className={styles.block_side}>Repo Exists By name&email</button>
                     <button className={styles.block_side}>Upload File</button>
@@ -77,6 +78,15 @@ function Dashboard() {
                     <button className={styles.block_side}>File List in Repo</button>
                     <button className={styles.block_side} >Delete Repo</button>
                 </div>
+
+                {showModel && (
+                    <div className={styles.createPopUp}>
+                        <div>
+                            <span className={styles.block_main}>Create Repo</span>
+                            <button onClick={() => setShowModel(false)}>Close</button>
+                        </div>
+                    </div>
+                )}
 
                 <span className={styles.block_main}>Chat</span>
                 <div className={styles.btn_block}>
