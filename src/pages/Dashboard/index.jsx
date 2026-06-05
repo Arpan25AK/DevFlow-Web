@@ -116,7 +116,7 @@ function Dashboard() {
                                 <label className={loginStyles.sideHeader}>Private?</label>
                                 <div className={toggleStyles['toggle-button-cover']}>
                                     <div className={toggleStyles['button-cover']}>
-                                        <div className={`${toggleStyles.button} ${toggleStyles.r}`} id="button-3">
+                                        <div className={`${toggleStyles.button} ${toggleStyles.r} ${toggleStyles.btn3}`}>
                                             <input
                                                 className={toggleStyles.checkbox}
                                                 type="checkbox"
