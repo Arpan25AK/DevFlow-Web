@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import {IoNotificationsOutline, IoPinOutline, IoPinSharp} from 'react-icons/io5'
 import { IoPersonCircleOutline } from 'react-icons/io5'
 import styles from './Dashboard.module.css'
+import loginStyles from '../Login/Login.module.css'
 import logo from '../../assets/git.jpg'
 import propic from '../../assets/propic.jpeg'
 import {useState} from "react";
@@ -10,6 +11,8 @@ function Dashboard() {
 
     const[repos, setRepos] = useState([])
     const[showModel, setShowModel] = useState(false)
+    const [createName, setCreateName] = useState("")
+    const [createEmail, setCreateEmail] = useState("")
 
     const[pinned , setPinned] = useState(() => {
         const saved = localStorage.getItem("pinned")
@@ -35,6 +38,11 @@ function Dashboard() {
     const unpinnedRepos = sortedRepos.filter(repo =>
      !pinned.find(p => p.id === repo.id)
     )
+
+    const handleChange = (e) =>{
+        setCreateName(e.target.value)
+    }
+
 
     return(
         <div>
@@ -65,6 +73,40 @@ function Dashboard() {
 
             <p className={styles.header}>DashBoard</p>
 
+            {showModel && (
+                <div className={styles.modelOverlay} onClick={() => setShowModel(false)}>
+                    <div className={styles.createPopUp} onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.boxheader}>
+                        <span className={styles.popupHeader}>Create Repo</span>
+                        <button className={styles.x_btn} onClick={() => setShowModel(false)}>X</button>
+                        </div>
+
+                        <div className={loginStyles.inputGroup}>
+                            <label className={loginStyles.sideHeader}>Name
+                                <input
+                                    className={loginStyles.inputBox}
+                                    type="text"
+                                    value={createName}
+                                    onChange={(e) => setCreateName(e.target.value)}
+                                />
+                            </label>
+
+                            <label className={loginStyles.sideHeader}>Email
+                                <input
+                                    className={loginStyles.inputBox}
+                                    type="text"
+                                    value={createEmail}
+                                    onChange={(e) => setCreateEmail(e.target.value)}
+                                />
+                            </label>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            )}
+
         <div className={styles.rowbox}>
 
             <div className={styles.glassBox}>
@@ -79,14 +121,7 @@ function Dashboard() {
                     <button className={styles.block_side} >Delete Repo</button>
                 </div>
 
-                {showModel && (
-                    <div className={styles.createPopUp}>
-                        <div>
-                            <span className={styles.block_main}>Create Repo</span>
-                            <button onClick={() => setShowModel(false)}>Close</button>
-                        </div>
-                    </div>
-                )}
+
 
                 <span className={styles.block_main}>Chat</span>
                 <div className={styles.btn_block}>
