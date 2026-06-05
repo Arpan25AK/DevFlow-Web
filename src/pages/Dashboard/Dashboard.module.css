@@ -232,13 +232,6 @@
     justify-content: space-between;
 }
 
-.popupHeader{
-    font-size: 1.2vw;
-    font-weight: bold;
-    color: white;
-    margin-left: 1vw;
-}
-
 .x_btn{
     margin-left: auto;
     border: none;

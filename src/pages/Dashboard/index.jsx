@@ -3,6 +3,7 @@ import {IoNotificationsOutline, IoPinOutline, IoPinSharp} from 'react-icons/io5'
 import { IoPersonCircleOutline } from 'react-icons/io5'
 import styles from './Dashboard.module.css'
 import loginStyles from '../Login/Login.module.css'
+import toggleStyles from './Component/Toggle.module.css'
 import logo from '../../assets/git.jpg'
 import propic from '../../assets/propic.jpeg'
 import {useState} from "react";
@@ -13,6 +14,8 @@ function Dashboard() {
     const[showModel, setShowModel] = useState(false)
     const [createName, setCreateName] = useState("")
     const [createEmail, setCreateEmail] = useState("")
+    const [createDesc, setCreateDesc] = useState("")
+    const [isPrivate, setIsPrivate] = useState(false)
 
     const[pinned , setPinned] = useState(() => {
         const saved = localStorage.getItem("pinned")
@@ -77,7 +80,7 @@ function Dashboard() {
                 <div className={styles.modelOverlay} onClick={() => setShowModel(false)}>
                     <div className={styles.createPopUp} onClick={(e) => e.stopPropagation()}>
                         <div className={styles.boxheader}>
-                        <span className={styles.popupHeader}>Create Repo</span>
+                        <span className={loginStyles.title}>Create Repo</span>
                         <button className={styles.x_btn} onClick={() => setShowModel(false)}>X</button>
                         </div>
 
@@ -99,6 +102,33 @@ function Dashboard() {
                                     onChange={(e) => setCreateEmail(e.target.value)}
                                 />
                             </label>
+
+                            <label className={loginStyles.sideHeader}>Description
+                                <input
+                                    className={loginStyles.inputBox}
+                                    type="text"
+                                    value={createDesc}
+                                    onChange={(e) => setCreateDesc(e.target.value)}
+                                />
+                            </label>
+
+                            <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                                <label className={loginStyles.sideHeader}>Private?</label>
+                                <div className={toggleStyles['toggle-button-cover']}>
+                                    <div className={toggleStyles['button-cover']}>
+                                        <div className={`${toggleStyles.button} ${toggleStyles.r}`} id="button-3">
+                                            <input
+                                                className={toggleStyles.checkbox}
+                                                type="checkbox"
+                                                checked={isPrivate}
+                                                onChange={(e) => setIsPrivate(e.target.checked)}
+                                            />
+                                            <div className={toggleStyles.knobs}></div>
+                                            <div className={toggleStyles.layer}></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
 
