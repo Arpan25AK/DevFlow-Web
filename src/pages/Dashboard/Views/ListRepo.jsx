@@ -8,7 +8,7 @@ import {useState} from "react";
 
 function ListRepo(){
     const navigate = useNavigate()
-    const [repo, setRepo] = useState(null)
+    const [repos, setRepos] = useState([])
 
     const [username] = useState(() => localStorage.getItem('username') || 'User')
     return(
@@ -40,7 +40,18 @@ function ListRepo(){
 
 
                 <div className={styles.mainbox}>
-                    <div className={styles.glassBox}></div>
+                    <div className={styles.glassBox}>
+                        {repos.map(repo => (
+                            <div key={repo.id}>
+                                <span>{repo.name}</span>
+                                <span>{repo.isPrivate ? 'private' : 'public'}</span>
+                                <p>{repo.description}</p>
+                                <span>
+                                    Updated {new Date(repo.createdAt).toLocaleDateString()}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
             <span className={listStyles.profile_name}>{username}</span>
