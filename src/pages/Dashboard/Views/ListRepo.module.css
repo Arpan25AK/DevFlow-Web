@@ -1,0 +1,15 @@
+.profile_circle{
+    width: 30vw;
+    height: 30vw;
+    border-radius: 50%;
+    margin-left: 7vw;
+    margin-top: 5vw;
+}
+
+.profile_name{
+    margin-left: 17vw;
+    margin-top: 18vw;
+    color: white;
+    font-weight: bold;
+    font-size: 4vw;
+}

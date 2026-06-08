@@ -1,9 +1,16 @@
 import styles from "../Dashboard.module.css";
 import { useNavigate } from 'react-router-dom'
 import logo from "../../../assets/git.jpg";
+import listStyles from "./ListRepo.module.css"
+import propic from "../../../assets/propic.jpeg";
+import {IoPersonCircleOutline} from "react-icons/io5";
+import {useState} from "react";
 
 function ListRepo(){
     const navigate = useNavigate()
+    const [repo, setRepo] = useState(null)
+
+    const [username] = useState(() => localStorage.getItem('username') || 'User')
     return(
         <div>
 
@@ -26,11 +33,17 @@ function ListRepo(){
             </div>
 
             <div className={styles.rowbox}>
-                <div className={styles.propic_btn}>
 
+                    {propic
+                        ? <img  className={listStyles.profile_circle} src={propic} alt="profile" />
+                        : <IoPersonCircleOutline size={28} />}
+
+
+                <div className={styles.mainbox}>
+                    <div className={styles.glassBox}></div>
                 </div>
             </div>
-
+            <span className={listStyles.profile_name}>{username}</span>
 
         </div>
 
