@@ -143,7 +143,7 @@ function Dashboard() {
                 <span className={styles.block_main}>Repository</span>
                 <div className={styles.btn_block}>
                     <button className={styles.block_side} onClick={() => setShowModel(true)}>Create Repo</button>
-                    <button className={styles.block_side} onClick={() => navigate('/signup')}>Get All Repos</button>
+                    <button className={styles.block_side} onClick={() => navigate('/listrepo')}>Get All Repos</button>
                     <button className={styles.block_side}>Repo Exists By name&email</button>
                     <button className={styles.block_side}>Upload File</button>
                     <button className={styles.block_side}>Download File</button>
