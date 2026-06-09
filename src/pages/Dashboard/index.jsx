@@ -60,7 +60,7 @@ function Dashboard() {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`},
                 body : JSON.stringify({name: createName, ownerEmail: createEmail,
-                    description: createDesc, isPrivate: isPrivate})
+                    description: createDesc, isPrivate: !isPrivate})
             })
 
             const result = await response.text()
@@ -158,7 +158,7 @@ function Dashboard() {
                                                 className={toggleStyles.checkbox}
                                                 type="checkbox"
                                                 checked={isPrivate}
-                                                onChange={(e) => setIsPrivate(e.target.checked)}
+                                                onChange={(e) => setIsPrivate(!e.target.checked)}
                                             />
                                             <div className={toggleStyles.knobs}></div>
                                             <div className={toggleStyles.layer}></div>
