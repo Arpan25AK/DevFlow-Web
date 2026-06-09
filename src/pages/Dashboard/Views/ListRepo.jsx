@@ -65,7 +65,6 @@ function ListRepo() {
                     <span className={listStyles.profile_name}>{username}</span>
                 </div>
 
-                {/* Right: repo list */}
                 <div className={styles.mainbox}>
                     <span className={styles.block_main}>Repositories</span>
 
@@ -92,9 +91,9 @@ function ListRepo() {
                                     padding: '2px 8px',
                                     borderRadius: '10px',
                                     border: '1px solid rgba(255,255,255,0.2)',
-                                    color: repo.isPrivate ? '#f87171' : '#4ade80'
+                                    color: repo.private  ? '#f87171' : '#4ade80'
                                 }}>
-                                    {repo.isPrivate ? 'Private' : 'Public'}
+                                    {repo.private  ? 'Private' : 'Public'}
                                 </span>
                             </div>
                         ))}
