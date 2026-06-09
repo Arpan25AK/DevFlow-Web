@@ -24,7 +24,8 @@ function Login() {
                 SetError(token || 'Invalid credentials')
             } else {
                 localStorage.setItem('token', token)
-                navigate('/')
+                localStorage.setItem('username', Email)  // ✅ save username
+                navigate('/dashboard')
             }
         } catch (err) {
             SetError('Something went wrong. Try again.')

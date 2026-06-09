@@ -24,7 +24,7 @@ function Signup() {
             if (!response.ok) {
                 SetError(result || 'User already exists!')
             } else {
-                navigate('/login')
+                navigate('/')
             }
         } catch (err) {
             SetError("Something went wrong. Try again!")

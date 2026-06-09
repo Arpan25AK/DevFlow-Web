@@ -16,6 +16,9 @@ function Dashboard() {
     const [createEmail, setCreateEmail] = useState("")
     const [createDesc, setCreateDesc] = useState("")
     const [isPrivate, setIsPrivate] = useState(false)
+    const [createRepo , setCreateRepo] = useState(false)
+    const [createLoading, setCreateLoading] = useState(false)
+    const [createError, setCreateError] = useState('')
 
     const[pinned , setPinned] = useState(() => {
         const saved = localStorage.getItem("pinned")
@@ -44,6 +47,40 @@ function Dashboard() {
 
     const handleChange = (e) =>{
         setCreateName(e.target.value)
+    }
+
+    const handleCreateRepo = async () => {
+        setCreateLoading(true)
+        setCreateError('')
+
+        try{
+            const response  = await fetch('http://localhost:8080/api/repositories/create', {
+                method : 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`},
+                body : JSON.stringify({name: createName, ownerEmail: createEmail,
+                    description: createDesc, isPrivate: isPrivate})
+            })
+
+            const result = await response.text()
+
+            if(!response.ok){
+                setCreateError(result || 'error while creating repo')
+            }else{
+                setShowModel(false)
+                setCreateName('')
+                setCreateEmail('')
+                setCreateDesc('')
+                setIsPrivate(false)
+                alert('repo created successfully')
+
+            }
+        }catch (err){
+            setCreateError('something went wrong , try again?')
+        }finally {
+            setCreateLoading(false)
+        }
     }
 
 
@@ -128,6 +165,17 @@ function Dashboard() {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div className={loginStyles.btnContainer}>
+                                {createError && <p className={loginStyles.error}>{createError}</p>}
+                                <button
+                                    className={loginStyles.submitBtn}
+                                    onClick={handleCreateRepo}
+                                    disabled={createLoading}
+                                >
+                                    {createLoading ? 'creating repo...' : 'create repo'}
+                                </button>
                             </div>
                         </div>
 
