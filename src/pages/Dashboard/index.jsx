@@ -20,6 +20,9 @@ function Dashboard() {
     const [createLoading, setCreateLoading] = useState(false)
     const [createError, setCreateError] = useState('')
 
+    const [fileName, setFileName] = useState('')
+    const [fileEmail, setFileEmail] = useState('')
+
     const[pinned , setPinned] = useState(() => {
         const saved = localStorage.getItem("pinned")
         return saved ? JSON.parse(saved) : []
