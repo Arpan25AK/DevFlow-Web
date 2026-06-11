@@ -4,88 +4,24 @@ import { IoPersonCircleOutline } from 'react-icons/io5'
 import styles from './Dashboard.module.css'
 import loginStyles from '../Login/Login.module.css'
 import toggleStyles from './Component/Toggle.module.css'
+import { useDashboard } from './useDashboard'
 import logo from '../../assets/git.jpg'
 import propic from '../../assets/propic.jpeg'
-import {useState} from "react";
+
+
 function Dashboard() {
     const navigate = useNavigate()
 
-    const[repos, setRepos] = useState([])
-    const[showModel, setShowModel] = useState(false)
-    const [createName, setCreateName] = useState("")
-    const [createEmail, setCreateEmail] = useState("")
-    const [createDesc, setCreateDesc] = useState("")
-    const [isPrivate, setIsPrivate] = useState(false)
-    const [createRepo , setCreateRepo] = useState(false)
-    const [createLoading, setCreateLoading] = useState(false)
-    const [createError, setCreateError] = useState('')
-
-    const [fileName, setFileName] = useState('')
-    const [fileEmail, setFileEmail] = useState('')
-
-    const[pinned , setPinned] = useState(() => {
-        const saved = localStorage.getItem("pinned")
-        return saved ? JSON.parse(saved) : []
-    })
-
-    const togglePin = (repo) =>{
-        const alreadyPinned = pinned.find( r => r.id === repo.id)
-        let updated
-
-        if(alreadyPinned){
-            updated = pinned.filter(r => r.id !== repo.id)
-        }else{
-            updated = [...pinned, repo]
-        }
-
-        setPinned(updated)
-        localStorage.setItem('pinned', JSON.stringify(updated))
-    }
-
-    const sortedRepos = [...repos].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
-
-    const unpinnedRepos = sortedRepos.filter(repo =>
-     !pinned.find(p => p.id === repo.id)
-    )
-
-    const handleChange = (e) =>{
-        setCreateName(e.target.value)
-    }
-
-    const handleCreateRepo = async () => {
-        setCreateLoading(true)
-        setCreateError('')
-
-        try{
-            const response  = await fetch('http://localhost:8080/api/repositories/create', {
-                method : 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`},
-                body : JSON.stringify({name: createName, ownerEmail: createEmail,
-                    description: createDesc, isPrivate: !isPrivate})
-            })
-
-            const result = await response.text()
-
-            if(!response.ok){
-                setCreateError(result || 'error while creating repo')
-            }else{
-                setShowModel(false)
-                setCreateName('')
-                setCreateEmail('')
-                setCreateDesc('')
-                setIsPrivate(false)
-                alert('repo created successfully')
-
-            }
-        }catch (err){
-            setCreateError('something went wrong , try again?')
-        }finally {
-            setCreateLoading(false)
-        }
-    }
-
+    const {
+        showModel, setShowModel,
+        createName, setCreateName,
+        createEmail, setCreateEmail,
+        createDesc, setCreateDesc,
+        isPrivate, setIsPrivate,
+        createLoading, createError,
+        pinned, togglePin,
+        unpinnedRepos, handleCreateRepo
+    } = useDashboard()
 
     return(
         <div>
