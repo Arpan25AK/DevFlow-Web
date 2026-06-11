@@ -2,7 +2,7 @@ import { useState } from "react"
 
 export function useDashboard() {
     const [repos, setRepos] = useState([])
-    const [showModel, setShowModel] = useState(false)
+    const [showModel, setShowModel] = useState(null) // null | 'create' | 'upload'
     const [createName, setCreateName] = useState("")
     const [createEmail, setCreateEmail] = useState("")
     const [createDesc, setCreateDesc] = useState("")
@@ -46,7 +46,7 @@ export function useDashboard() {
             if (!response.ok) {
                 setCreateError(result || 'error while creating repo')
             } else {
-                setShowModel(false)
+                setShowModel(null)
                 setCreateName('')
                 setCreateEmail('')
                 setCreateDesc('')
@@ -60,20 +60,20 @@ export function useDashboard() {
         }
     }
 
-    const handlefile= async () => {
+    const handleFile = async () => {
         const email = localStorage.getItem('username')
-        const token = localStorage.setItem('token')
+        const token = localStorage.getItem('token')
 
         const formData = new FormData()
         formData.append('file', file)
 
         const response = await fetch(
-            `http://localhost:8080/api/repositories/upload/${email}/${repoName}`,{
-                method : 'POST',
+            `http://localhost:8080/api/repositories/upload/${email}/${repoName}`, {
+                method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
-                body : formData
+                body: formData
             }
         )
     }
@@ -88,6 +88,7 @@ export function useDashboard() {
         pinned, togglePin,
         unpinnedRepos, handleCreateRepo,
         repoName, setRepoName,
-        file, setFile
+        file, setFile,
+        handleFile
     }
 }

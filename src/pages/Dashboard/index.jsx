@@ -20,7 +20,10 @@ function Dashboard() {
         isPrivate, setIsPrivate,
         createLoading, createError,
         pinned, togglePin,
-        unpinnedRepos, handleCreateRepo
+        unpinnedRepos, handleCreateRepo,
+        repoName, setRepoName,
+        file, setFile,
+        handleFile
     } = useDashboard()
 
     return(
@@ -39,8 +42,8 @@ function Dashboard() {
 
             <div className={styles.navbar}>
                 <div className={styles.logogrp}>
-                <img  className={styles.logoimg} src={logo} alt="logo" />
-                <button className={styles.logoText} onClick={() => navigate('/')}>DevFlow</button>
+                    <img className={styles.logoimg} src={logo} alt="logo" />
+                    <button className={styles.logoText} onClick={() => navigate('/')}>DevFlow</button>
                 </div>
                 <button className={styles.noti_btn}><IoNotificationsOutline size={22} /></button>
                 <button className={styles.propic_btn}>
@@ -52,12 +55,13 @@ function Dashboard() {
 
             <p className={styles.header}>DashBoard</p>
 
-            {showModel && (
-                <div className={styles.modelOverlay} onClick={() => setShowModel(false)}>
+            {/* Create Repo Modal */}
+            {showModel === 'create' && (
+                <div className={styles.modelOverlay} onClick={() => setShowModel(null)}>
                     <div className={styles.createPopUp} onClick={(e) => e.stopPropagation()}>
                         <div className={styles.boxheader}>
-                        <span className={loginStyles.title}>Create Repo</span>
-                        <button className={styles.x_btn} onClick={() => setShowModel(false)}>X</button>
+                            <span className={loginStyles.title}>Create Repo</span>
+                            <button className={styles.x_btn} onClick={() => setShowModel(null)}>X</button>
                         </div>
 
                         <div className={loginStyles.inputGroup}>
@@ -117,83 +121,114 @@ function Dashboard() {
                                 </button>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
             )}
 
-        <div className={styles.rowbox}>
 
-            <div className={styles.glassBox}>
-                <span className={styles.block_main}>Repository</span>
-                <div className={styles.btn_block}>
-                    <button className={styles.block_side} onClick={() => setShowModel(true)}>Create Repo</button>
-                    <button className={styles.block_side} onClick={() => navigate('/listrepo')}>Get All Repos</button>
-                    <button className={styles.block_side}>Upload File</button>
-                    <button className={styles.block_side}>Download File</button>
-                    <button className={styles.block_side}>File List in Repo</button>
-                    <button className={styles.block_side} >Delete Repo</button>
+            {showModel === 'upload' && (
+                <div className={styles.modelOverlay} onClick={() => setShowModel(null)}>
+                    <div className={styles.createPopUp} onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.boxheader}>
+                            <span className={loginStyles.title}>Upload File</span>
+                            <button className={styles.x_btn} onClick={() => setShowModel(null)}>X</button>
+                        </div>
+
+                        <div className={loginStyles.inputGroup}>
+                            <label className={loginStyles.sideHeader}>Repo Name
+                                <input
+                                    className={loginStyles.inputBox}
+                                    type="text"
+                                    value={repoName}
+                                    onChange={(e) => setRepoName(e.target.value)}
+                                />
+                            </label>
+
+                            <label className={loginStyles.sideHeader}>File
+                                <input
+                                    className={loginStyles.inputBox}
+                                    type="file"
+                                    onChange={(e) => setFile(e.target.files[0])}
+                                />
+                            </label>
+
+                            <div className={loginStyles.btnContainer}>
+                                {createError && <p className={loginStyles.error}>{createError}</p>}
+                                <button
+                                    className={loginStyles.submitBtn}
+                                    onClick={handleFile}
+                                    disabled={createLoading}
+                                >
+                                    {createLoading ? 'uploading...' : 'upload file'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            )}
 
+            <div className={styles.rowbox}>
 
-
-                <span className={styles.block_main}>Chat</span>
-                <div className={styles.btn_block}>
-                    <button className={styles.block_side} >Join Convo</button>
-                </div>
-
-                <span className={styles.block_main}>Code Review</span>
-                <div className={styles.btn_block}>
-                    <button className={styles.block_side} >Check Reviews</button>
-                </div>
-
-                <span className={styles.block_main}>CI/CD</span>
+                <div className={styles.glassBox}>
+                    <span className={styles.block_main}>Repository</span>
                     <div className={styles.btn_block}>
-                        <button className={styles.block_side} >History</button>
+                        <button className={styles.block_side} onClick={() => setShowModel('create')}>Create Repo</button>
+                        <button className={styles.block_side} onClick={() => navigate('/listrepo')}>Get All Repos</button>
+                        <button className={styles.block_side} onClick={() => setShowModel('upload')}>Upload File</button>
+                        <button className={styles.block_side}>Download File</button>
+                        <button className={styles.block_side}>File List in Repo</button>
+                        <button className={styles.block_side}>Delete Repo</button>
                     </div>
-            </div>
 
-            <div className={styles.mainbox}>
-                {pinned.length > 0 && (
-                    <div>
-                        <span className={styles.block_main}>Pinned</span>
-                        <div className={styles.repoGrid}>
-                            {pinned.map(repo => (
-                                <div key={repo.id} className={styles.repoCard}>
-                                    <span>{repo.name}</span>
-                                    <button onClick={() => togglePin(repo)}>
-                                        <IoPinSharp size={16} color="#00d4d4" />
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-
+                    <span className={styles.block_main}>Chat</span>
+                    <div className={styles.btn_block}>
+                        <button className={styles.block_side}>Join Convo</button>
                     </div>
-                )}
 
-                <div className={styles.repoGrid}>
-                    {unpinnedRepos.map(repo => (
-                        <div key={repo.id} className={styles.repoCard}>
-                            {repo.name}
-                            <button onClick={() => togglePin(repo)}>
-                                <IoPinOutline size={16} />
-                            </button>
-                        </div>
-                        ))}
+                    <span className={styles.block_main}>Code Review</span>
+                    <div className={styles.btn_block}>
+                        <button className={styles.block_side}>Check Reviews</button>
+                    </div>
+
+                    <span className={styles.block_main}>CI/CD</span>
+                    <div className={styles.btn_block}>
+                        <button className={styles.block_side}>History</button>
+                    </div>
                 </div>
-                <span className={styles.block_main}>PipeLine History</span>
+
+                <div className={styles.mainbox}>
+                    {pinned.length > 0 && (
+                        <div>
+                            <span className={styles.block_main}>Pinned</span>
+                            <div className={styles.repoGrid}>
+                                {pinned.map(repo => (
+                                    <div key={repo.id} className={styles.repoCard}>
+                                        <span>{repo.name}</span>
+                                        <button onClick={() => togglePin(repo)}>
+                                            <IoPinSharp size={16} color="#00d4d4" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    <div className={styles.repoGrid}>
+                        {unpinnedRepos.map(repo => (
+                            <div key={repo.id} className={styles.repoCard}>
+                                {repo.name}
+                                <button onClick={() => togglePin(repo)}>
+                                    <IoPinOutline size={16} />
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                    <span className={styles.block_main}>PipeLine History</span>
+                </div>
+
             </div>
 
-
-
-
         </div>
-
-        </div>
-
-
     )
 }
 
