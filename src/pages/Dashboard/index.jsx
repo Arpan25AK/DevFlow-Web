@@ -23,7 +23,13 @@ function Dashboard() {
         unpinnedRepos, handleCreateRepo,
         repoName, setRepoName,
         file, setFile,
-        handleFile
+        handleFile,
+        downEmail, setDownEmail,
+        downRepo, setDownRepo,
+        downFile, setDownFile,
+        downError, setDownError,
+        downLoading, setDownLoading,
+        handleDownFile
     } = useDashboard()
 
     return(
@@ -125,7 +131,7 @@ function Dashboard() {
                 </div>
             )}
 
-
+            {/*upload file react component*/}
             {showModel === 'upload' && (
                 <div className={styles.modelOverlay} onClick={() => setShowModel(null)}>
                     <div className={styles.createPopUp} onClick={(e) => e.stopPropagation()}>
@@ -160,6 +166,57 @@ function Dashboard() {
                                     disabled={createLoading}
                                 >
                                     {createLoading ? 'uploading...' : 'upload file'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/*download file react component*/}
+            {showModel === 'download' && (
+                <div className={styles.modelOverlay} onClick={() => setShowModel(null)}>
+                    <div className={styles.createPopUp} onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.boxheader}>
+                            <span className={loginStyles.title}>Download File</span>
+                            <button className={styles.x_btn} onClick={() => setShowModel(null)}>X</button>
+                        </div>
+
+                        <div className={loginStyles.inputGroup}>
+                            <label className={loginStyles.sideHeader}>Download Email
+                                <input
+                                    className={loginStyles.inputBox}
+                                    type="text"
+                                    value={downEmail}
+                                    onChange={(e) => setDownEmail(e.target.value)}
+                                />
+                            </label>
+
+                            <label className={loginStyles.sideHeader}>Download Repo
+                                <input
+                                    className={loginStyles.inputBox}
+                                    type="text"
+                                    value={downRepo}
+                                    onChange={(e) => setDownRepo(e.target.value)}
+                                />
+                            </label>
+
+                            <label className={loginStyles.sideHeader}>Download File
+                                <input
+                                    className={loginStyles.inputBox}
+                                    type="file"
+                                    onChange={(e) => setDownFile(e.target.files[0])}
+                                />
+                            </label>
+
+                            <div className={loginStyles.btnContainer}>
+                                {createError && <p className={loginStyles.error}>{createError}</p>}
+                                <button
+                                    className={loginStyles.submitBtn}
+                                    onClick={handleDownFile}
+                                    disabled={createLoading}
+                                >
+                                    {createLoading ? 'Downloading...' : 'Download file'}
                                 </button>
                             </div>
                         </div>
