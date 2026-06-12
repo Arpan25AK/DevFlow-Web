@@ -13,6 +13,12 @@ export function useDashboard() {
     const [repoName, setRepoName] = useState('')
     const [file, setFile] = useState('')
 
+    const [downEmail, setDownEmail] = useState('')
+    const [downRepo, setDownRepo] = useState('')
+    const [downFile, setDownFile] = useState('')
+    const [downError, setDownError] = useState('')
+    const [downLoading, setDownLoading] = useState(true)
+
     const [pinned, setPinned] = useState(() => {
         const saved = localStorage.getItem("pinned")
         return saved ? JSON.parse(saved) : []
@@ -78,6 +84,45 @@ export function useDashboard() {
         )
     }
 
+    const handleDownFile = async () => {
+        setDownError('')
+        setDownLoading(true)
+
+        try{
+            const token = localStorage.getItem('token')
+
+            const response = await fetch('http://localhost:8080/api/repositories/download/{ownerEmail}/{name}?fileName={exact_file_name}', {
+                method : 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            })
+
+            if(!response.ok){
+                const msg = await response.text()
+                setDownError(msg || 'something went wrong during downloading')
+                return
+            }
+
+            const blob = await response.blob()
+            const url = window.URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.href = url
+            a.download = downFile
+            a.click()
+            window.URL.revokeObjectURL(url)
+
+            setShowModel(null)
+            setDownEmail('')
+            setDownRepo('')
+            setDownFile('')
+        }catch(err){
+            setDownError('something went wrong, Try Again?')
+        }finally {
+            setDownLoading(false)
+        }
+    }
+
     return {
         repos, showModel, setShowModel,
         createName, setCreateName,
@@ -90,5 +135,11 @@ export function useDashboard() {
         repoName, setRepoName,
         file, setFile,
         handleFile
+        downEmail, setDownEmail,
+        downRepo, setDownRepo,
+        downFile, setDownFile,
+        downError, setDownError,
+        downLoading, setDownLoading,
+        handleDownFile
     }
 }
