@@ -183,7 +183,7 @@ function Dashboard() {
                         </div>
 
                         <div className={loginStyles.inputGroup}>
-                            <label className={loginStyles.sideHeader}>Download Email
+                            <label className={loginStyles.sideHeader}>Owner Email
                                 <input
                                     className={loginStyles.inputBox}
                                     type="text"
@@ -192,7 +192,7 @@ function Dashboard() {
                                 />
                             </label>
 
-                            <label className={loginStyles.sideHeader}>Download Repo
+                            <label className={loginStyles.sideHeader}>Repo Name
                                 <input
                                     className={loginStyles.inputBox}
                                     type="text"
@@ -201,22 +201,23 @@ function Dashboard() {
                                 />
                             </label>
 
-                            <label className={loginStyles.sideHeader}>Download File
+                            <label className={loginStyles.sideHeader}>File Name
                                 <input
                                     className={loginStyles.inputBox}
-                                    type="file"
-                                    onChange={(e) => setDownFile(e.target.files[0])}
+                                    type="text"
+                                    value={downFile}
+                                    onChange={(e) => setDownFile(e.target.value)}
                                 />
                             </label>
 
                             <div className={loginStyles.btnContainer}>
-                                {createError && <p className={loginStyles.error}>{createError}</p>}
+                                {downError && <p className={loginStyles.error}>{downError}</p>}
                                 <button
                                     className={loginStyles.submitBtn}
                                     onClick={handleDownFile}
-                                    disabled={createLoading}
+                                    disabled={downLoading}
                                 >
-                                    {createLoading ? 'Downloading...' : 'Download file'}
+                                    {downLoading ? 'downloading...' : 'download file'}
                                 </button>
                             </div>
                         </div>
@@ -232,7 +233,7 @@ function Dashboard() {
                         <button className={styles.block_side} onClick={() => setShowModel('create')}>Create Repo</button>
                         <button className={styles.block_side} onClick={() => navigate('/listrepo')}>Get All Repos</button>
                         <button className={styles.block_side} onClick={() => setShowModel('upload')}>Upload File</button>
-                        <button className={styles.block_side}>Download File</button>
+                        <button className={styles.block_side} onClick={() => setShowModel('download')}>Download File</button>
                         <button className={styles.block_side}>File List in Repo</button>
                         <button className={styles.block_side}>Delete Repo</button>
                     </div>

@@ -17,7 +17,7 @@ export function useDashboard() {
     const [downRepo, setDownRepo] = useState('')
     const [downFile, setDownFile] = useState('')
     const [downError, setDownError] = useState('')
-    const [downLoading, setDownLoading] = useState(true)
+    const [downLoading, setDownLoading] = useState(false)
 
     const [pinned, setPinned] = useState(() => {
         const saved = localStorage.getItem("pinned")
@@ -91,7 +91,7 @@ export function useDashboard() {
         try{
             const token = localStorage.getItem('token')
 
-            const response = await fetch('http://localhost:8080/api/repositories/download/{ownerEmail}/{name}?fileName={exact_file_name}', {
+            const response = await fetch(`http://localhost:8080/api/repositories/download/${downEmail}/${downRepo}?fileName=${downFile}`, {
                 method : 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -134,7 +134,7 @@ export function useDashboard() {
         unpinnedRepos, handleCreateRepo,
         repoName, setRepoName,
         file, setFile,
-        handleFile
+        handleFile,
         downEmail, setDownEmail,
         downRepo, setDownRepo,
         downFile, setDownFile,
