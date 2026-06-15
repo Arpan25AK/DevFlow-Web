@@ -12,6 +12,7 @@
 
 .createPopUp {
     width: 250px;
+    max-height: 80vh;
     padding: 10px;
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(12px);

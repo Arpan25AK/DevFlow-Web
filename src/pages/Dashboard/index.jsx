@@ -281,7 +281,7 @@ function Dashboard() {
             <div className={styles.rowbox}>
 
                 <div className={sidebarStyles.glassBox}>
-                    <span className={sidebarStyles.block_main}>Repository</span>
+                    <span className={sidebarStyles.block_main}>Repositories</span>
                     <div className={sidebarStyles.btn_block}>
                         <button className={sidebarStyles.block_side} onClick={() => setShowModel('create')}>Create Repo</button>
                         <button className={sidebarStyles.block_side} onClick={() => navigate('/listrepo')}>Get All Repos</button>
