@@ -228,12 +228,14 @@ export function useDashboard() {
         fileList, setFileList,
         listRepoName, setListRepoName,
         listOwnerEmail, setListOwnerEmail,
-        listError, setListError,
-        listLoading, setListLoading,
+        listError,
+        listLoading,
         handleFileList,
-        deleteError, setDeleteError,
-        deleteLoading, setDeleteLoading,
-        handleDeleteFile
-
+        deleteError,
+        deleteLoading,
+        handleDeleteFile,
+        confirmText, setConfirmText,
+        pendingDeleteFile,
+        initiateDelete,
     }
 }

@@ -1,0 +1,39 @@
+.modelOverlay {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    align-items: center;
+    z-index: 100;
+}
+
+.createPopUp {
+    width: 250px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.boxheader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.x_btn {
+    margin-left: auto;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: white;
+}
