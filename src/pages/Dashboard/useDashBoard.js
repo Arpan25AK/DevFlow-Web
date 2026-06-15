@@ -27,6 +27,8 @@ export function useDashboard() {
 
     const [deleteError, setDeleteError] = useState('')
     const [deleteLoading, setDeleteLoading] = useState(false)
+    const [confirmText, setConfirmText] = useState('')
+    const [pendingDeleteFile, setPendingDeleteFile] = useState(null)
 
     const [pinned, setPinned] = useState(() => {
         const saved = localStorage.getItem("pinned")
@@ -161,29 +163,46 @@ export function useDashboard() {
         }
     }
 
-    const handleDeleteFile = async(fileName) =>{
+    const initiateDelete = (fileName) => {
+        setPendingDeleteFile(fileName)
+        setShowModel('confirmdelete')
+        setConfirmText('')
+        setDeleteError('')
+    }
+
+    const handleDeleteFile = async () => {
+        if (confirmText !== 'confirm') {
+            setDeleteError('type "confirm" to delete')
+            return
+        }
+
         setDeleteError('')
         setDeleteLoading(true)
 
-        try{
+        try {
             const token = localStorage.getItem('token')
-            const response = await fetch(`http://localhost:8080/api/repositories/deletefile/${listOwnerEmail}/${listRepoName}?fileName=${fileName}`, {
-                method : 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-            })
+            const response = await fetch(
+                `http://localhost:8080/api/repositories/deletefile/${listOwnerEmail}/${listRepoName}?fileName=${pendingDeleteFile}`,
+                {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                }
+            )
 
-            if(!response.ok){
-                const msg = await response.text()
-                setDeleteError("You are not the owner of the file")
+            if (!response.ok) {
+                setDeleteError("You are not the owner of this file")
                 return
             }
 
-            setFileList(prev => prev.filter(f => f!== fileName))
-        }catch(err){
-            setDeleteError("something went wrong during the file deletion!")
-        }finally {
+            setFileList(prev => prev.filter(f => f !== pendingDeleteFile))
+
+            setConfirmText('')
+            setPendingDeleteFile(null)
+            setShowModel('filelist')
+
+        } catch (err) {
+            setDeleteError("something went wrong during deletion!")
+        } finally {
             setDeleteLoading(false)
         }
     }
