@@ -138,7 +138,7 @@ export function useDashboard() {
 
         try{
             const token = localStorage.getItem('token')
-            const response = await fetch(`http://localhost:8080/api/repositories/getrepos/{ownerEmail}`, {
+            const response = await fetch(`http://localhost:8080/api/repositories/getfiles/${listOwnerEmail}/${listRepoName}`, {
                 method : 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -161,13 +161,13 @@ export function useDashboard() {
         }
     }
 
-    const handleDeleteFile = async(Filename) =>{
+    const handleDeleteFile = async(fileName) =>{
         setDeleteError('')
         setDeleteLoading(true)
 
         try{
             const token = localStorage.getItem('token')
-            const response = await fetch(`http://localhost:8080/api/repositories/deletefile/${listEmail}/${listRepo}?fileName=${fileName}`, {
+            const response = await fetch(`http://localhost:8080/api/repositories/deletefile/${listOwnerEmail}/${listRepoName}?fileName=${fileName}`, {
                 method : 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -180,7 +180,7 @@ export function useDashboard() {
                 return
             }
 
-            setFileList(prev => prev.filter(f => f!== Filename))
+            setFileList(prev => prev.filter(f => f!== fileName))
         }catch(err){
             setDeleteError("something went wrong during the file deletion!")
         }finally {
