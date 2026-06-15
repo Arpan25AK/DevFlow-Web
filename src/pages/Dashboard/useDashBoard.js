@@ -19,6 +19,15 @@ export function useDashboard() {
     const [downError, setDownError] = useState('')
     const [downLoading, setDownLoading] = useState(false)
 
+    const [fileList , setFileList] = useState([])
+    const [listRepoName, setListRepoName] = useState('')
+    const [listOwnerEmail, setListOwnerEmail] = useState('')
+    const [listError, setListError] = useState('')
+    const [listLoading, setListLoading] = useState(false)
+
+    const [deleteError, setDeleteError] = useState('')
+    const [deleteLoading, setDeleteLoading] = useState(false)
+
     const [pinned, setPinned] = useState(() => {
         const saved = localStorage.getItem("pinned")
         return saved ? JSON.parse(saved) : []
@@ -123,6 +132,62 @@ export function useDashboard() {
         }
     }
 
+    const handleFileList = async() =>{
+        setListError('')
+        setListLoading(true)
+
+        try{
+            const token = localStorage.getItem('token')
+            const response = await fetch(`http://localhost:8080/api/repositories/getrepos/{ownerEmail}`, {
+                method : 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            })
+
+            if(!response.ok){
+                const msg = await response.text()
+                setListError("something went wrong, Try Again")
+                return
+            }
+
+            const data  = await response.json()
+            setFileList(data)
+
+        }catch(err){
+            setListError("something went wrong during the list fetch!")
+        }finally {
+            setListLoading(false)
+        }
+    }
+
+    const handleDeleteFile = async(Filename) =>{
+        setDeleteError('')
+        setDeleteLoading(true)
+
+        try{
+            const token = localStorage.getItem('token')
+            const response = await fetch(`http://localhost:8080/api/repositories/deletefile/${listEmail}/${listRepo}?fileName=${fileName}`, {
+                method : 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            })
+
+            if(!response.ok){
+                const msg = await response.text()
+                setDeleteError("You are not the owner of the file")
+                return
+            }
+
+            setFileList(prev => prev.filter(f => f!== Filename))
+        }catch(err){
+            setDeleteError("something went wrong during the file deletion!")
+        }finally {
+            setDeleteLoading(false)
+        }
+    }
+
     return {
         repos, showModel, setShowModel,
         createName, setCreateName,
@@ -140,6 +205,16 @@ export function useDashboard() {
         downFile, setDownFile,
         downError, setDownError,
         downLoading, setDownLoading,
-        handleDownFile
+        handleDownFile,
+        fileList, setFileList,
+        listRepoName, setListRepoName,
+        listOwnerEmail, setListOwnerEmail,
+        listError, setListError,
+        listLoading, setListLoading,
+        handleFileList,
+        deleteError, setDeleteError,
+        deleteLoading, setDeleteLoading,
+        handleDeleteFile
+
     }
 }
