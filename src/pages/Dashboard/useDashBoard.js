@@ -10,8 +10,10 @@ export function useDashboard() {
     const [createLoading, setCreateLoading] = useState(false)
     const [createError, setCreateError] = useState('')
 
-    const [repoName, setRepoName] = useState('')
+    const [FileRepoName, setFileRepoName] = useState('')
     const [file, setFile] = useState('')
+    const [fileError, setFileError] = useState('')
+    const [fileLoading, setFileLoading] = useState(false)
 
     const [downEmail, setDownEmail] = useState('')
     const [downRepo, setDownRepo] = useState('')
@@ -78,21 +80,40 @@ export function useDashboard() {
     }
 
     const handleFile = async () => {
+        setFileError('')
+        setFileLoading(true)
+
         const email = localStorage.getItem('username')
         const token = localStorage.getItem('token')
 
         const formData = new FormData()
         formData.append('file', file)
 
-        const response = await fetch(
-            `http://localhost:8080/api/repositories/upload/${email}/${repoName}`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-                body: formData
+        try {
+            const response = await fetch(
+                `http://localhost:8080/api/repositories/upload/${email}/${FileRepoName}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                })
+
+            const msg = await response.text()
+
+            if (!response.ok) {
+                setFileError(msg || "error during uploading of file")
+                return
             }
-        )
+
+            setShowModel(null)
+            setFileRepoName('')
+            setFile('')
+        }catch (err){
+            setFileError("something went wrong during upload, Try Again")
+        }finally {
+            setFileLoading(false)
+        }
     }
 
     const handleDownFile = async () => {
@@ -216,7 +237,7 @@ export function useDashboard() {
         createLoading, createError,
         pinned, togglePin,
         unpinnedRepos, handleCreateRepo,
-        repoName, setRepoName,
+        repoName: FileRepoName, setRepoName: setFileRepoName,
         file, setFile,
         handleFile,
         downEmail, setDownEmail,
