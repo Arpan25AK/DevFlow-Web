@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { togglePin } from '../../store/pinnedSlice'
 import {IoNotificationsOutline, IoPinOutline, IoPinSharp} from 'react-icons/io5'
 import { IoPersonCircleOutline } from 'react-icons/io5'
 import styles from './Dashboard.module.css'
@@ -13,6 +15,8 @@ import propic from '../../assets/propic.jpeg'
 
 function Dashboard() {
     const navigate = useNavigate()
+    const pinned = useSelector(state => state.pinned)
+    const dispatch = useDispatch()
 
     const {
         showModel, setShowModel,
@@ -21,8 +25,7 @@ function Dashboard() {
         createDesc, setCreateDesc,
         isPrivate, setIsPrivate,
         createLoading, createError,
-        pinned, togglePin,
-        unpinnedRepos, handleCreateRepo,
+        sortedRepos, handleCreateRepo,
         repoName, setRepoName,
         file, setFile,
         handleFile,
@@ -45,6 +48,8 @@ function Dashboard() {
         pendingDeleteFile,
         initiateDelete,
     } = useDashboard()
+
+    const unpinnedRepos = sortedRepos.filter(repo => !pinned.find(p => p.id === repo.id))
 
     return(
         <div>
@@ -315,7 +320,7 @@ function Dashboard() {
                                 {pinned.map(repo => (
                                     <div key={repo.id} className={styles.repoCard}>
                                         <span>{repo.name}</span>
-                                        <button onClick={() => togglePin(repo)}>
+                                        <button onClick={() => dispatch(togglePin(repo))}>
                                             <IoPinSharp size={16} color="#00d4d4" />
                                         </button>
                                     </div>
@@ -328,7 +333,7 @@ function Dashboard() {
                         {unpinnedRepos.map(repo => (
                             <div key={repo.id} className={styles.repoCard}>
                                 {repo.name}
-                                <button onClick={() => togglePin(repo)}>
+                                <button onClick={() => dispatch(togglePin(repo))}>
                                     <IoPinOutline size={16} />
                                 </button>
                             </div>
