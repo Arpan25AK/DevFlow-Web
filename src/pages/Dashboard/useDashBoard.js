@@ -2,7 +2,7 @@ import { useState } from "react"
 
 export function useDashboard() {
     const [repos, setRepos] = useState([])
-    const [showModel, setShowModel] = useState(null) // null | 'create' | 'upload'
+    const [showModel, setShowModel] = useState(null)
     const [createName, setCreateName] = useState("")
     const [createEmail, setCreateEmail] = useState("")
     const [createDesc, setCreateDesc] = useState("")
@@ -21,7 +21,7 @@ export function useDashboard() {
     const [downError, setDownError] = useState('')
     const [downLoading, setDownLoading] = useState(false)
 
-    const [fileList , setFileList] = useState([])
+    const [fileList, setFileList] = useState([])
     const [listRepoName, setListRepoName] = useState('')
     const [listOwnerEmail, setListOwnerEmail] = useState('')
     const [listError, setListError] = useState('')
@@ -32,22 +32,7 @@ export function useDashboard() {
     const [confirmText, setConfirmText] = useState('')
     const [pendingDeleteFile, setPendingDeleteFile] = useState(null)
 
-    const [pinned, setPinned] = useState(() => {
-        const saved = localStorage.getItem("pinned")
-        return saved ? JSON.parse(saved) : []
-    })
-
-    const togglePin = (repo) => {
-        const alreadyPinned = pinned.find(r => r.id === repo.id)
-        const updated = alreadyPinned
-            ? pinned.filter(r => r.id !== repo.id)
-            : [...pinned, repo]
-        setPinned(updated)
-        localStorage.setItem('pinned', JSON.stringify(updated))
-    }
-
     const sortedRepos = [...repos].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    const unpinnedRepos = sortedRepos.filter(repo => !pinned.find(p => p.id === repo.id))
 
     const handleCreateRepo = async () => {
         setCreateLoading(true)
@@ -109,9 +94,9 @@ export function useDashboard() {
             setShowModel(null)
             setFileRepoName('')
             setFile('')
-        }catch (err){
+        } catch (err) {
             setFileError("something went wrong during upload, Try Again")
-        }finally {
+        } finally {
             setFileLoading(false)
         }
     }
@@ -120,17 +105,17 @@ export function useDashboard() {
         setDownError('')
         setDownLoading(true)
 
-        try{
+        try {
             const token = localStorage.getItem('token')
 
             const response = await fetch(`http://localhost:8080/api/repositories/download/${downEmail}/${downRepo}?fileName=${downFile}`, {
-                method : 'GET',
+                method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
             })
 
-            if(!response.ok){
+            if (!response.ok) {
                 const msg = await response.text()
                 setDownError(msg || 'something went wrong during downloading')
                 return
@@ -148,38 +133,37 @@ export function useDashboard() {
             setDownEmail('')
             setDownRepo('')
             setDownFile('')
-        }catch(err){
+        } catch (err) {
             setDownError('something went wrong, Try Again?')
-        }finally {
+        } finally {
             setDownLoading(false)
         }
     }
 
-    const handleFileList = async() =>{
+    const handleFileList = async () => {
         setListError('')
         setListLoading(true)
 
-        try{
+        try {
             const token = localStorage.getItem('token')
             const response = await fetch(`http://localhost:8080/api/repositories/getfiles/${listOwnerEmail}/${listRepoName}`, {
-                method : 'GET',
+                method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
             })
 
-            if(!response.ok){
-                const msg = await response.text()
+            if (!response.ok) {
                 setListError("something went wrong, Try Again")
                 return
             }
 
-            const data  = await response.json()
+            const data = await response.json()
             setFileList(data)
 
-        }catch(err){
+        } catch (err) {
             setListError("something went wrong during the list fetch!")
-        }finally {
+        } finally {
             setListLoading(false)
         }
     }
@@ -216,7 +200,6 @@ export function useDashboard() {
             }
 
             setFileList(prev => prev.filter(f => f !== pendingDeleteFile))
-
             setConfirmText('')
             setPendingDeleteFile(null)
             setShowModel('filelist')
@@ -235,8 +218,7 @@ export function useDashboard() {
         createDesc, setCreateDesc,
         isPrivate, setIsPrivate,
         createLoading, createError,
-        pinned, togglePin,
-        unpinnedRepos, handleCreateRepo,
+        sortedRepos, handleCreateRepo,
         repoName: FileRepoName, setRepoName: setFileRepoName,
         file, setFile,
         handleFile,
