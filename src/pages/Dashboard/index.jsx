@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { togglePin } from '../../store/pinnedSlice'
+import { fetchRepos } from '../../store/repoSlice'
 import {IoNotificationsOutline, IoPinOutline, IoPinSharp} from 'react-icons/io5'
 import { IoPersonCircleOutline } from 'react-icons/io5'
+import { useEffect } from 'react'
 import styles from './Dashboard.module.css'
 import modalStyles from './Modal.module.css'
 import sidebarStyles from './Sidebar.module.css'
@@ -16,7 +18,12 @@ import propic from '../../assets/propic.jpeg'
 function Dashboard() {
     const navigate = useNavigate()
     const pinned = useSelector(state => state.pinned)
+    const { list: repos } = useSelector(state => state.repos)
     const dispatch = useDispatch()
+
+    useEffect(() => { dispatch(fetchRepos()) }, [dispatch])
+
+    const sortedRepos = [...repos].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 
     const {
         showModel, setShowModel,
@@ -25,7 +32,7 @@ function Dashboard() {
         createDesc, setCreateDesc,
         isPrivate, setIsPrivate,
         createLoading, createError,
-        sortedRepos, handleCreateRepo,
+        handleCreateRepo,
         repoName, setRepoName,
         file, setFile,
         handleFile,
