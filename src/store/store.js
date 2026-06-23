@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import pinnedReducer from './pinnedSlice'
+import reposReducer from './repoSlice'
 
 export const store = configureStore({
     reducer: {
-        pinned: pinnedReducer
+        pinned: pinnedReducer,
+        repos: reposReducer
     }
 })
 

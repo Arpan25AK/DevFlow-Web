@@ -4,37 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../../../assets/git.jpg";
 import propic from "../../../assets/propic.jpeg";
 import { IoPersonCircleOutline } from "react-icons/io5";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchRepos } from '../../../store/repoSlice'
 
 function ListRepo() {
     const navigate = useNavigate()
-    const [repos, setRepos] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState('')
-    const [username] = useState(() => localStorage.getItem('username') || 'User')
-
-    useEffect(() => {
-        const fetchRepos = async () => {
-            try {
-                const email = localStorage.getItem('username')
-                const token = localStorage.getItem('token')
-                const response = await fetch(`http://localhost:8080/api/repositories/getrepos/${email}`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                })
-                if (!response.ok) {
-                    setError('Failed to fetch repos')
-                    return
-                }
-                const data = await response.json()
-                setRepos(data)
-            } catch (err) {
-                setError('Something went wrong')
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchRepos()
-    }, [])
+    const dispatch = useDispatch()
+    const { list: repos, loading, error } = useSelector(state => state.repos)
+    const username = localStorage.getItem('username') || 'User'
+    useEffect(() => { dispatch(fetchRepos()) }, [dispatch])
 
     return (
         <div>
