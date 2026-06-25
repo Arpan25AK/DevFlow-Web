@@ -32,6 +32,13 @@ export function useDashboard() {
     const [confirmText, setConfirmText] = useState('')
     const [pendingDeleteFile, setPendingDeleteFile] = useState(null)
 
+    const [deleteRepoOwnerEmail , setDeleteRepoOwnerEmail] = useState('')
+    const [deleteRepoName , setDeleteRepoName] = useState('')
+    const [deleteRepoError, setDeleteRepoError] = useState('')
+    const [deleteRepoLoading, setDeleteRepoLoading] = useState(false)
+    const [repoConfirmText, setRepoConfirmText] = useState('')
+    const [pendingDeleteRepo, setPendingDeleteRepo] = useState(null)
+
     const sortedRepos = [...repos].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 
     const handleCreateRepo = async () => {
@@ -208,6 +215,44 @@ export function useDashboard() {
             setDeleteError("something went wrong during deletion!")
         } finally {
             setDeleteLoading(false)
+        }
+    }
+
+    const handleDeleteRepo = async () => {
+        if (repoConfirmText !== 'confirm') {
+            setDeleteRepoError('type "confirm" to delete')
+            return
+        }
+
+        setDeleteRepoError('')
+        setDeleteRepoLoading(true)
+
+        try {
+            const token = localStorage.getItem('token')
+            const response = await fetch(
+                `http://localhost:8080/api/repositories/${deleteRepoOwnerEmail}/${deleteRepoName}`,
+                {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                }
+            )
+
+            if (!response.ok) {
+                setDeleteError("You are not the owner of this Repo")
+                return
+            }
+
+            setRepoConfirmText('')
+            setPendingDeleteRepo(null)
+            setShowModel(null)
+            dispatch(fetchRepos())
+
+            setDeleteRepoError("You are not the owner of this Repo")
+
+        } catch (err) {
+            setDeleteRepoError("something went wrong during deletion!")
+        } finally {
+            setDeleteRepoLoading(false)
         }
     }
 
