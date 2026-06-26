@@ -1,6 +1,9 @@
 import { useState } from "react"
+import { useDispatch } from 'react-redux'
+import { fetchRepos } from '../../store/repoSlice'
 
 export function useDashboard() {
+    const dispatch = useDispatch()
     const [repos, setRepos] = useState([])
     const [showModel, setShowModel] = useState(null)
     const [createName, setCreateName] = useState("")
@@ -182,6 +185,15 @@ export function useDashboard() {
         setDeleteError('')
     }
 
+    const initiateDeleteRepo = (repo) => {
+        setPendingDeleteRepo(repo)
+        setDeleteRepoOwnerEmail(repo.ownerEmail)
+        setDeleteRepoName(repo.name)
+        setShowModel('confirmdeleterepo')
+        setRepoConfirmText('')
+        setDeleteRepoError('')
+    }
+
     const handleDeleteFile = async () => {
         if (confirmText !== 'confirm') {
             setDeleteError('type "confirm" to delete')
@@ -238,7 +250,7 @@ export function useDashboard() {
             )
 
             if (!response.ok) {
-                setDeleteError("You are not the owner of this Repo")
+                setDeleteRepoError("You are not the owner of this Repo")
                 return
             }
 
@@ -246,8 +258,6 @@ export function useDashboard() {
             setPendingDeleteRepo(null)
             setShowModel(null)
             dispatch(fetchRepos())
-
-            setDeleteRepoError("You are not the owner of this Repo")
 
         } catch (err) {
             setDeleteRepoError("something went wrong during deletion!")
@@ -285,5 +295,13 @@ export function useDashboard() {
         confirmText, setConfirmText,
         pendingDeleteFile,
         initiateDelete,
+        deleteRepoOwnerEmail, setDeleteRepoOwnerEmail,
+        deleteRepoName, setDeleteRepoName,
+        deleteRepoError,
+        deleteRepoLoading,
+        repoConfirmText, setRepoConfirmText,
+        pendingDeleteRepo,
+        handleDeleteRepo,
+        initiateDeleteRepo,
     }
 }

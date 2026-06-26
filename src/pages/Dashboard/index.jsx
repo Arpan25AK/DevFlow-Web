@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { togglePin } from '../../store/pinnedSlice'
 import { fetchRepos } from '../../store/repoSlice'
-import {IoNotificationsOutline, IoPinOutline, IoPinSharp} from 'react-icons/io5'
+import {IoNotificationsOutline, IoPinSharp} from 'react-icons/io5'
 import { IoPersonCircleOutline } from 'react-icons/io5'
 import { useEffect } from 'react'
 import styles from './Dashboard.module.css'
@@ -22,8 +22,6 @@ function Dashboard() {
     const dispatch = useDispatch()
 
     useEffect(() => { dispatch(fetchRepos()) }, [dispatch])
-
-    const sortedRepos = [...repos].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 
     const {
         showModel, setShowModel,
@@ -55,8 +53,6 @@ function Dashboard() {
         pendingDeleteFile,
         initiateDelete,
     } = useDashboard()
-
-    const unpinnedRepos = sortedRepos.filter(repo => !pinned.find(p => p.id === repo.id))
 
     return(
         <div>
@@ -300,12 +296,11 @@ function Dashboard() {
                         <button className={sidebarStyles.block_side} onClick={() => setShowModel('upload')}>Upload File</button>
                         <button className={sidebarStyles.block_side} onClick={() => setShowModel('download')}>Download File</button>
                         <button className={sidebarStyles.block_side} onClick={() => setShowModel('filelist')}>File List in Repo</button>
-                        <button className={sidebarStyles.block_side}>Delete Repo</button>
                     </div>
 
                     <span className={sidebarStyles.block_main}>Chat</span>
                     <div className={sidebarStyles.btn_block}>
-                        <button className={sidebarStyles.block_side}>Join Convo</button>
+                        <button className={sidebarStyles.block_side} onClick={() => navigate('/chat')}>Join Convo</button>
                     </div>
 
                     <span className={sidebarStyles.block_main}>Code Review</span>
@@ -320,7 +315,7 @@ function Dashboard() {
                 </div>
 
                 <div className={styles.mainbox}>
-                    {pinned.length > 0 && (
+                    {pinned.length > 0 ? (
                         <div>
                             <span className={sidebarStyles.block_main}>Pinned</span>
                             <div className={styles.repoGrid}>
@@ -334,18 +329,9 @@ function Dashboard() {
                                 ))}
                             </div>
                         </div>
+                    ) : (
+                        <p style={{ color: '#a0a0a0' }}>No pinned repositories. Pin some from the repo list!</p>
                     )}
-
-                    <div className={styles.repoGrid}>
-                        {unpinnedRepos.map(repo => (
-                            <div key={repo.id} className={styles.repoCard}>
-                                {repo.name}
-                                <button onClick={() => dispatch(togglePin(repo))}>
-                                    <IoPinOutline size={16} />
-                                </button>
-                            </div>
-                        ))}
-                    </div>
                     <span className={sidebarStyles.block_main}>PipeLine History</span>
                 </div>
 

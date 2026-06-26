@@ -1,19 +1,34 @@
 import styles from "../Dashboard.module.css";
+import modalStyles from "../Modal.module.css";
+import loginStyles from "../../Login/Login.module.css";
 import listStyles from "./ListRepo.module.css";
 import { useNavigate } from 'react-router-dom';
 import logo from "../../../assets/git.jpg";
 import propic from "../../../assets/propic.jpeg";
-import { IoPersonCircleOutline } from "react-icons/io5";
+import { IoPersonCircleOutline, IoPinOutline, IoPinSharp } from "react-icons/io5";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchRepos } from '../../../store/repoSlice'
+import { togglePin } from '../../../store/pinnedSlice'
+import { useDashboard } from '../useDashboard'
 
 function ListRepo() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { list: repos, loading, error } = useSelector(state => state.repos)
+    const pinned = useSelector(state => state.pinned)
     const username = localStorage.getItem('username') || 'User'
     useEffect(() => { dispatch(fetchRepos()) }, [dispatch])
+
+    const {
+        showModel, setShowModel,
+        deleteRepoError,
+        deleteRepoLoading,
+        repoConfirmText, setRepoConfirmText,
+        pendingDeleteRepo,
+        handleDeleteRepo,
+        initiateDeleteRepo,
+    } = useDashboard()
 
     return (
         <div>
@@ -34,6 +49,45 @@ function ListRepo() {
                     <button className={styles.logoText} onClick={() => navigate('/dashboard')}>DevFlow</button>
                 </div>
             </div>
+
+            {/* Confirm Delete Repo Modal */}
+            {showModel === 'confirmdeleterepo' && (
+                <div className={modalStyles.modelOverlay} onClick={() => setShowModel(null)}>
+                    <div className={modalStyles.createPopUp} onClick={(e) => e.stopPropagation()}>
+                        <div className={modalStyles.boxheader}>
+                            <span className={loginStyles.title}>Confirm Delete Repo</span>
+                            <button className={modalStyles.x_btn} onClick={() => setShowModel(null)}>X</button>
+                        </div>
+
+                        <div className={loginStyles.inputGroup}>
+                            <p style={{ color: '#ff4d4d', fontSize: '13px', margin: '0' }}>
+                                you are about to delete repo <b style={{ color: 'white' }}>{pendingDeleteRepo?.name}</b>
+                            </p>
+                            <label className={loginStyles.sideHeader}>type "confirm" to proceed
+                                <input
+                                    className={loginStyles.inputBox}
+                                    type="text"
+                                    value={repoConfirmText}
+                                    onChange={(e) => setRepoConfirmText(e.target.value)}
+                                    onKeyDown={(e) => e.key === 'Enter' && handleDeleteRepo()}
+                                />
+                            </label>
+
+                            <div className={loginStyles.btnContainer}>
+                                {deleteRepoError && <p className={loginStyles.error}>{deleteRepoError}</p>}
+                                <button
+                                    className={loginStyles.submitBtn}
+                                    onClick={handleDeleteRepo}
+                                    disabled={deleteRepoLoading}
+                                    style={{ background: '#ff4d4d' }}
+                                >
+                                    {deleteRepoLoading ? 'deleting...' : 'delete repo'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <div className={styles.rowbox}>
 
@@ -65,15 +119,30 @@ function ListRepo() {
                                         Updated {new Date(repo.createdAt).toLocaleDateString()}
                                     </span>
                                 </div>
-                                <span style={{
-                                    fontSize: '0.75rem',
-                                    padding: '2px 8px',
-                                    borderRadius: '10px',
-                                    border: '1px solid rgba(255,255,255,0.2)',
-                                    color: repo.private  ? '#f87171' : '#4ade80'
-                                }}>
-                                    {repo.private  ? 'Private' : 'Public'}
-                                </span>
+
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <span style={{
+                                        fontSize: '0.75rem',
+                                        padding: '2px 8px',
+                                        borderRadius: '10px',
+                                        border: '1px solid rgba(255,255,255,0.2)',
+                                        color: repo.private ? '#f87171' : '#4ade80'
+                                    }}>
+                                        {repo.private ? 'Private' : 'Public'}
+                                    </span>
+
+                                    <button onClick={() => dispatch(togglePin(repo))} style={{background:'none', border:'none', cursor:'pointer'}}>
+                                        {pinned.find(p => p.id === repo.id)
+                                            ? <IoPinSharp size={16} color="#00d4d4" />
+                                            : <IoPinOutline size={16} color="#a0a0a0" />}
+                                    </button>
+
+                                    {username === repo.ownerEmail && (
+                                        <button onClick={() => initiateDeleteRepo(repo)} style={{background:'none', border:'none', color:'#ff4d4d', cursor:'pointer'}}>
+                                            ✕
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                         ))}
                     </div>
