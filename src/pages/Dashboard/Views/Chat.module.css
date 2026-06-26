@@ -42,3 +42,41 @@
     from { transform: translateY(0) scale(1); }
     to   { transform: translateY(-20%) scale(1.02) rotate(1deg); }
 }
+
+.pageContent {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+}
+
+.logogrp {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: 8vw;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.logoimg {
+    width: 2vw;
+    height: 2vw;
+}
+
+.logoText {
+    color: #ffffff;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 2vw;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
